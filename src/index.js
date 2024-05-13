@@ -4,10 +4,15 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import http from 'http';
 import dotenv from 'dotenv';
+import dbConnect from './db/index.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT;
+
+const MONGODB_URL = process.env.MONGODB_URL;
+
+dbConnect(MONGODB_URL);
 
 const app = express();
 
