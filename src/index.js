@@ -1,10 +1,11 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const http = require('http');
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import http from 'http';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 const PORT = process.env.PORT;
 
@@ -18,5 +19,5 @@ app.use(bodyParser.json());
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
-  console.log(`Server running on Port ${PORT}`);
+  console.log(`Server running on PORT ${PORT}`);
 });
