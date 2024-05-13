@@ -6,7 +6,7 @@ async function dbConnect(MONGODB_URL) {
       throw new Error('Please add your MongoDB URL');
     }
 
-    mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(MONGODB_URL);
     mongoose.connection.on('error', (error) => console.log(error));
     mongoose.connection.once('connected', () => console.log('Database Connected'));
   } catch (error) {
