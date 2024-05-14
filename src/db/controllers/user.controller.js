@@ -11,15 +11,11 @@ export const findUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!id) {
-      res.sendStatus(400);
-    }
+    if (!id) return res.sendStatus(400);
 
     const user = await getUserById(id);
 
-    if (!user) {
-      res.sendStatus(400);
-    }
+    if (!user) res.sendStatus(400);
 
     return res.status(200).json(user).end();
   } catch (error) {
@@ -32,23 +28,18 @@ export const newUser = async (req, res) => {
   try {
     const { email, password, medical_records } = req.body;
 
-    if (!email || !password) {
-      return res.sendStatus(400);
-    }
+    if (!email || !password) return res.sendStatus(400);
 
     if (medical_records && medical_records.medication.length > 0) {
       medical_records.medication.forEach((medication) => {
-        if (!medication.name || !medication.dose || !medication.frequency) {
+        if (!medication.name || !medication.dose || !medication.frequency)
           return res.sendStatus(400);
-        }
       });
     }
 
     const existingUser = await getUserByEmail(email);
 
-    if (existingUser) {
-      return res.sendStatus(400);
-    }
+    if (existingUser) return res.sendStatus(400);
 
     const salt = bcrypt.genSaltSync(10);
 
@@ -69,6 +60,8 @@ export const newUser = async (req, res) => {
 export const removeUser = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!id) return res.sendStatus(400);
 
     const deletedUser = await deleteUserById(id);
 

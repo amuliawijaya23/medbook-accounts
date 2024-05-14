@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { BasicStrategy } from 'passport-http';
-import { User, getUserByEmail } from '../models/user.model.js';
+import { getUserByEmail } from '../models/user.model.js';
 
 import bcrypt from 'bcrypt';
 

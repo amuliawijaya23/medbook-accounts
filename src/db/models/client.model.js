@@ -9,4 +9,4 @@ export const Client = mongoose.model.Client || mongoose.model('Client', clientSc
 
 export const createClient = (values) =>
   new Client(values).save().then((client) => client.toObject());
-export const findClient = (clientId) => Client.findOne({ clientId });
+export const getClientByClientId = (clientId) => Client.findOne({ clientId });
