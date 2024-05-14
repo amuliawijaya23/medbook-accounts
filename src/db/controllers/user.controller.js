@@ -1,4 +1,10 @@
-import { getUserById, getUserByEmail, createUser } from '../models/user.model.js';
+import {
+  getUserById,
+  getUserByEmail,
+  createUser,
+  updateUserById,
+  deleteUserById
+} from '../models/user.model.js';
 
 export const findUser = async (req, res) => {
   try {
@@ -29,11 +35,12 @@ export const newUser = async (req, res) => {
       return res.sendStatus(400);
     }
 
-    if (
-      medical_records &&
-      (!medical_records.name || !medical_records.dose || !medical_records.frequency)
-    ) {
-      return res.sendStatus(400);
+    if (medical_records.medication.length > 0) {
+      medical_records.medication.forEach((medication) => {
+        if (!medication.name || !medication.dose || !medication.frequency) {
+          return res.sendStatus(400);
+        }
+      });
     }
 
     const existingUser = await getUserByEmail(email);
@@ -47,6 +54,19 @@ export const newUser = async (req, res) => {
     });
 
     return res.status(200).json(user).end();
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
+
+export const removeUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedUser = await deleteUserById(id);
+
+    return res.status(200).json(deletedUser).end();
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
