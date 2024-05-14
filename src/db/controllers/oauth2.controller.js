@@ -6,8 +6,12 @@ import { uid } from '../../helpers';
 
 const server = oauth2orize.createServer();
 
-server.serializeClient((client, done) => {
-  return done(null, client.clientId);
+server.serializeClient(async (client, done) => {
+  try {
+    return done(null, client.clientId);
+  } catch (error) {
+    return done(error);
+  }
 });
 
 server.deserializeClient(async (clientId, done) => {
