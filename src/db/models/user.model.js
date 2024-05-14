@@ -12,7 +12,8 @@ const userSchema = new Schema({
           frequency: { type: String, required: true }
         }
       ],
-      required: true
+      required: true,
+      select: false
     }
   }
 });
