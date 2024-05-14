@@ -17,5 +17,8 @@ const userSchema = new Schema({
   }
 });
 
-const User = mongoose.model.User || mongoose.model('User', userSchema);
-export default User;
+export const User = mongoose.model.User || mongoose.model('User', userSchema);
+
+export const getUserById = (id) => User.findById(id);
+export const createUser = (values) => new User(values).save().then((user) => user.toObject());
+export const getUserByEmail = (email) => User.findOne({ email });

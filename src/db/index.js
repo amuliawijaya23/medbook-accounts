@@ -6,6 +6,8 @@ async function dbConnect(MONGODB_URL) {
       throw new Error('Please add your MongoDB URL');
     }
 
+    mongoose.Promise = global.Promise;
+
     mongoose.connect(MONGODB_URL);
     mongoose.connection.on('error', (error) => console.log(error));
     mongoose.connection.once('connected', () => console.log('Database Connected'));

@@ -6,6 +6,8 @@ import http from 'http';
 import dotenv from 'dotenv';
 import dbConnect from './db/index.js';
 
+import router from './routers/index.js';
+
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -20,6 +22,8 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/', router());
 
 const server = http.createServer(app);
 
