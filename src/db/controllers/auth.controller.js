@@ -67,6 +67,6 @@ passport.use(
   })
 );
 
-export const isAuthenticated = passport.authenticate('basic', { session: false });
+export const isAuthenticated = passport.authenticate(['basic', 'bearer'], { session: false });
 export const isClientAuthenticated = passport.authenticate('client-basic', { session: false });
 export const isBearerAuthenticated = passport.authenticate('bearer', { session: false });
