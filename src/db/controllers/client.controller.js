@@ -21,11 +21,11 @@ export const newClient = (req, res) => {
 
 export const findClient = (req, res) => {
   try {
-    const { clientId } = req.body;
+    const { id } = req.params;
 
-    if (!clientId) return res.sendStatus(400);
+    if (!id) return res.sendStatus(400);
 
-    const client = await getClientByClientId(clientId);
+    const client = await getClientByClientId(id);
 
     if (!client) return res.sendStatus(400);
 
