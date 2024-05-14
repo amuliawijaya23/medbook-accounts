@@ -35,7 +35,7 @@ export const newUser = async (req, res) => {
       return res.sendStatus(400);
     }
 
-    if (medical_records.medication.length > 0) {
+    if (medical_records && medical_records.medication.length > 0) {
       medical_records.medication.forEach((medication) => {
         if (!medication.name || !medication.dose || !medication.frequency) {
           return res.sendStatus(400);
