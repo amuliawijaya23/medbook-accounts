@@ -1,13 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
 
 const userSchema = new Schema({
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true, select: false },
   medical_records: {
     medication: {
       type: [
         {
-          name: { type: String, required: true },
+          name: { type: String, required: true, unique: true },
           dose: { type: String, required: true },
           frequency: { type: String, required: true }
         }

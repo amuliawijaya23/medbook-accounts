@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import {
   getUserById,
   getUserByEmail,
@@ -49,8 +50,13 @@ export const newUser = async (req, res) => {
       return res.sendStatus(400);
     }
 
+    const salt = bcrypt.genSaltSync(10);
+
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
     const user = await createUser({
-      ...req.body
+      ...req.body,
+      password: hashedPassword
     });
 
     return res.status(200).json(user).end();
