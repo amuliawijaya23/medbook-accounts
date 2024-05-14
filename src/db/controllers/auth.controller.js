@@ -1,7 +1,9 @@
 import passport from 'passport';
 import { BasicStrategy } from 'passport-http';
+import { BearerStrategy } from 'passport-http-bearer';
 import { getUserByEmail } from '../models/user.model.js';
 import { getClientbyClientId } from '../models/code.model.js';
+import { getTokenByValue } from '../models/token.model';
 
 import bcrypt from 'bcrypt';
 
@@ -46,5 +48,25 @@ passport.use(
   })
 );
 
+passport.use(
+  new BearerStrategy(async (accessToken, done) => {
+    try {
+      if (!accessToken) return done(null, false);
+      const token = await getTokenByValue(accessToken);
+
+      if (!token) return done(null, false);
+
+      const client = await getClientbyClientId(token.clientId);
+
+      if (!client) return done(null, false);
+
+      return done(null, client, { scope: '*' });
+    } catch (error) {
+      return done(error);
+    }
+  })
+);
+
 export const isAuthenticated = passport.authenticate('basic', { session: false });
 export const isClientAuthenticated = passport.authenticate('client-basic', { session: false });
+export const isBearerAuthenticated = passport.authenticate('bearer', { session: false });

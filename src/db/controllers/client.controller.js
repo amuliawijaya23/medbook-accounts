@@ -1,4 +1,5 @@
 import { createClient, getClientByClientId } from '../models/client.model';
+import bcrypt from 'bcrypt';
 
 export const newClient = (req, res) => {
   try {
@@ -9,8 +10,12 @@ export const newClient = (req, res) => {
     const existingClient = await getClientByClientId(clientId);
   
     if (existingClient) return res.sendStatus(400);
+
+    const salt = bcrypt.genSaltSync(10);
+
+    const hashedSecret = bcrypt.hashSync(clientSecret, salt);
   
-    const client = await createClient({ ...req.body});
+    const client = await createClient({ ...req.body, clientSecret: hashedSecret });
 
     return res.status(200).json(client).end();
   } catch (error) {

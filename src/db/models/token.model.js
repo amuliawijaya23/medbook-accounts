@@ -6,3 +6,4 @@ const tokenSchema = new Schema({
 });
 
 export const Token = mongoose.model.Token || mongoose.model('Token', tokenSchema);
+export const getTokenByValue = (value) => Token.findOne({ value });
